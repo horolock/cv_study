@@ -1,4 +1,6 @@
 import keras
+import tensorflow as tf
+import matplotlib.pyplot as plt
 
 ### For downloading image
 # import ssl
@@ -7,3 +9,47 @@ import keras
 # image_path = keras.utils.get_file('C:/Users/hojoon/Developer/cv_study/image_process/content/image.jpg', origin=url)
 ###
 
+# Raw binary string
+image = tf.io.read_file("C:/Users/hojoon/Developer/cv_study/image_process/content/image.jpg")
+
+# decode to 3d tensor
+image = tf.image.decode_jpeg(image, channels=3)
+
+plt.imshow(image)
+plt.axis('off')
+plt.show()
+
+# Sample RGB Image
+rgb_image = tf.random.uniform([100, 100, 3], maxval=255, dtype=tf.float32)
+
+plt.imshow(rgb_image)
+plt.title("RGB Image")
+plt.axis('off')
+plt.show()
+
+# Grayscale
+grayscale_image = tf.image.rgb_to_grayscale(rgb_image)
+
+print(grayscale_image.shape)
+
+plt.imshow(grayscale_image.numpy().squeeze(), cmap="gray")
+plt.title("Grayscale Image")
+plt.axis('off')
+plt.show()
+
+### Can do grayscale manually
+# grayscale = R * 0.299 + G * 0.587 + B * 0.114
+# R = rgb_image[0][0][0] * 0.299
+# G = rgb_image[0][0][1] * 0.587
+# B = rgb_image[0][0][2] * 0.114
+# Y = R + G + B
+
+# HSV
+hsv_image = tf.image.rgb_to_hsv(rgb_image)
+hue_channel = hsv_image[:, :, 0]    # Only Hue channel
+
+plt.imshow(hue_channel, cmap='hsv')
+plt.title('Hue channel of HSV Image')
+plt.axis('off')
+plt.colorbar(label='Hue Value')
+plt.show()
