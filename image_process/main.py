@@ -53,3 +53,18 @@ plt.title('Hue channel of HSV Image')
 plt.axis('off')
 plt.colorbar(label='Hue Value')
 plt.show()
+
+# Normalize
+print("Normalize...")
+normalized_image = rgb_image / 255.0
+print(rgb_image[0][0])
+print(normalized_image[0][0])
+
+# Standardize (표준화)
+mean = tf.reduce_mean(rgb_image)
+stddev = tf.math.reduce_std(rgb_image)
+
+print("Standardize...")
+standardized_image = (rgb_image - mean) / stddev
+print(rgb_image[0][0])
+print(standardized_image[0][0])
